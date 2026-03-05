@@ -1,6 +1,8 @@
 package com.swapp.swapp.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,10 +27,15 @@ public class Article {
     private String picture;
     private String description;
     private LocalDate date;
-    private String state;
     private String category;
     private String creator;
-    private String status;
     private String reservedBy;
+
+
+    @Enumerated(EnumType.STRING)
+    private ArticleStatus status;
+
+    @Enumerated (EnumType.STRING)
+    private ArticleState state;
 
 }
