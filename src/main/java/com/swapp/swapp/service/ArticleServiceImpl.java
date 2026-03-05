@@ -50,8 +50,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.delete(optionalArticle.get());
     }
 
-    @Override
+    @Override("/article")
     public Article createArticle(ArticleRequestDTO dto) {
+        Article article = article.Service.createArticle(dto);
+        return new ResponseEntity<> (article, HttpStatus.CREATED);
        
     }
 
