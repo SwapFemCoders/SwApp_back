@@ -37,5 +37,5 @@ public class Article {
 
     @Enumerated (EnumType.STRING)
     private ArticleState state;
-
+    
 }

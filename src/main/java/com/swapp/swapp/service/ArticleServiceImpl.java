@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.swapp.swapp.dto.request.ArticleRequestDTO;
+//import com.swapp.swapp.dto.request.ArticleRequestDTO;
+import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleState;
 import com.swapp.swapp.entity.ArticleStatus;
@@ -21,9 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article createArticle(Article article) {
-        article.setStatus(ArticleStatus.RESERVED);
+        article.setStatus(ArticleStatus.AVAILABLE);
         
-
         return articleRepository.save(article);
 
     }
@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Article getArticleById(int id) {
          Optional <Article> optionalArticle = articleRepository.findById(id);
         if (optionalArticle.isEmpty())
-            throw new RuntimeException("No existe el articulo");
+            throw new RuntimeException("The article does not exist");
         return optionalArticle.get();
 
     }
@@ -50,11 +50,30 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.delete(optionalArticle.get());
     }
 
-    @Override("/article")
+    /* @Override("/article")
     public Article createArticle(ArticleRequestDTO dto) {
-        Article article = article.Service.createArticle(dto);
-        return new ResponseEntity<> (article, HttpStatus.CREATED);
-       
+        Article article =new article();
+        article.setTitle (dto.title());
+        
+    } */
+
+    @Override
+    public ArticleResponseDTO getAllArticleResponseDTO() {
+        
+        List<Article> articles = getAllAvailableArticles();
+
+        
+        List<Integer> ids = articles.stream()
+                .map(Article::getId)
+                .toList();
+        List<String> titles = articles.stream()
+                .map(Article::getTitle)
+                .toList();
+        List<String> pictures = articles.stream()
+                .map(Article::getPicture)
+                .toList();
+
+        return new ArticleResponseDTO(ids, titles, pictures);
     }
 
 }

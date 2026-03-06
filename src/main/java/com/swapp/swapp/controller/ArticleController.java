@@ -2,6 +2,7 @@ package com.swapp.swapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.service.ArticleService;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/v1/articles")
@@ -23,7 +26,6 @@ public class ArticleController {
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
-
     }
 
     @PostMapping
@@ -51,4 +53,10 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<ArticleResponseDTO> getAllAvailableArticlesToShow() {
+        ArticleResponseDTO dto = articleService.getAllArticleResponseDTO();
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+    
 }
