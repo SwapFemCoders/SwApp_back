@@ -1,9 +1,13 @@
 package com.swapp.swapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.service.ArticleService;
+
+import java.io.IOException;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 
 @RestController
 @RequestMapping("/api/v1/articles")
@@ -26,16 +31,17 @@ public class ArticleController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+    @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Article> createArticle(@RequestPart("article") Article article, @RequestPart("file")MultipartFile file) throws IOException {
+        article.setPicture(file.getBytes());
         Article newArticle = articleService.createArticle(article);
         return new ResponseEntity<>(newArticle, HttpStatus.CREATED);
 
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> getAllAvailableArticles() {
-        List<Article> articles = articleService.getAllAvailableArticles();
+    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticles() {
+        List<ArticleResponseDTO> articles = articleService.getAllAvailableArticles();
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
