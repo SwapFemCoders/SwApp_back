@@ -56,10 +56,6 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/available")
-    public ResponseEntity<ArticleResponseDTO> getAllAvailableArticlesToShow() {
-        ArticleResponseDTO dto = articleService.getAllArticleResponseDTO();
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
+  
     
 }

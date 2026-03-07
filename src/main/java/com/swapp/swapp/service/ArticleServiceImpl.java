@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.swapp.swapp.dto.request.ArticleRequestDTO;
+import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleState;
@@ -46,7 +47,6 @@ public class ArticleServiceImpl implements ArticleService {
         if (optionalArticle.isEmpty())
             throw new RuntimeException("The article does not exist");
         return optionalArticle.get();
-
     }
 
     @Override
@@ -57,10 +57,12 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.delete(optionalArticle.get());
     }
 
-    /* @Override("/article")
-    public Article createArticle(ArticleRequestDTO dto) {
-       Article art = articleMapper.toEntity(dto);
+
+    @Override
+    public Article createArticle(ArticleBasicResponseDTO dto) {
+        Article art = articleMapper.toEntity(dto);
         return articleRepository.save(art);
     }
+    }
 
-}
+

@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 import com.swapp.swapp.dto.request.ArticleRequestDTO;
+import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 
@@ -13,6 +14,7 @@ import com.swapp.swapp.entity.Article;
 public interface ArticleMapper {
 
     Article toEntity (ArticleRequestDTO dto);
+    Article toEntity (ArticleBasicResponseDTO dto);
 
     List<ArticleResponseDTO> toResponseAll (List<Article> listArticle);
 
