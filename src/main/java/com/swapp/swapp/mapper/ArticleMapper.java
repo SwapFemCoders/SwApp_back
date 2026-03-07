@@ -14,7 +14,8 @@ import com.swapp.swapp.entity.Article;
 public interface ArticleMapper {
 
     Article toEntity (ArticleRequestDTO dto);
-    Article toEntity (ArticleBasicResponseDTO dto);
+    
+    ArticleBasicResponseDTO toBasicDTO (Article entity);
 
     List<ArticleResponseDTO> toResponseAll (List<Article> listArticle);
 

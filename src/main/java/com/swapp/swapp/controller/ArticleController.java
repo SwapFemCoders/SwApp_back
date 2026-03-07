@@ -3,6 +3,7 @@ package com.swapp.swapp.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.service.ArticleService;
@@ -44,11 +45,11 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    @GetMapping ("/{id}")
+    /* @GetMapping ("/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable int id) {
        Article article = articleService.getArticleById(id);
         return new ResponseEntity<>(article, HttpStatus.OK);
-    }
+    } */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteArticle(@PathVariable int id) {
@@ -56,6 +57,10 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-  
+    @GetMapping ("/{id}")
+    public ResponseEntity<ArticleBasicResponseDTO> getArticleById(@PathVariable int id) {
+       ArticleBasicResponseDTO article = articleService.getArticleBasicResponseDTOById(id);
+        return new ResponseEntity<>(article, HttpStatus.OK);
+    }
     
 }

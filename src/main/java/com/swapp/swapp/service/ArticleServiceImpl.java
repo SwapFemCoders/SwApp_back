@@ -43,7 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getArticleById(int id) {
-         Optional <Article> optionalArticle = articleRepository.findById(id);
+         Optional <Article> optionalArticle = articleRepository.findById(id);         
         if (optionalArticle.isEmpty())
             throw new RuntimeException("The article does not exist");
         return optionalArticle.get();
@@ -53,16 +53,18 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticle(int id) {
         Optional <Article> optionalArticle = articleRepository.findById(id);
         if (optionalArticle.isEmpty())
-            throw new RuntimeException("No existe el articulo");
+            throw new RuntimeException("The article does not exist");
         articleRepository.delete(optionalArticle.get());
     }
 
-
     @Override
-    public Article createArticle(ArticleBasicResponseDTO dto) {
-        Article art = articleMapper.toEntity(dto);
-        return articleRepository.save(art);
+    public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id) {
+    Optional<Article> optionalArticle = articleRepository.findById(id);
+    if (optionalArticle.isEmpty())
+        throw new RuntimeException("The article does not exist");
+    
+    return articleMapper.toBasicDTO(optionalArticle.get());
     }
-    }
+}
 
 
