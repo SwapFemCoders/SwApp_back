@@ -65,6 +65,13 @@ public class ArticleServiceImpl implements ArticleService {
     
     return articleMapper.toBasicDTO(optionalArticle.get());
     }
+
+    @Override
+    public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId) {
+       List<Article> list = articleRepository.findByReservedId(reservedId);
+       return articleMapper.toResponseAll(list);
+         
+    }
 }
 
 

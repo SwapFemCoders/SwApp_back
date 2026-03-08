@@ -14,6 +14,7 @@ public interface ArticleService {
     public void deleteArticle(int id);
     //public Article createArticle (ArticleRequestDTO dto);
     public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id);
+    public List <ArticleResponseDTO> getAllReservedArticlesByReservedId (int userId);
    
 
     

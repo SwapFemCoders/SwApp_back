@@ -12,7 +12,6 @@ String title,
 byte[] picture,
 String description,
 LocalDate date,
-String creator,
 ArticleStatus status,
 ArticleState state
     

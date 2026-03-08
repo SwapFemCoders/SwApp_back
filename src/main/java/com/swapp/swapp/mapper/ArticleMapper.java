@@ -19,4 +19,6 @@ public interface ArticleMapper {
 
     List<ArticleResponseDTO> toResponseAll (List<Article> listArticle);
 
+    
+
 }

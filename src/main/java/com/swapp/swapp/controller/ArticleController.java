@@ -62,5 +62,11 @@ public class ArticleController {
        ArticleBasicResponseDTO article = articleService.getArticleBasicResponseDTOById(id);
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
+      
+    @GetMapping("/reserved/{reservedId}")
+    public ResponseEntity<List<ArticleResponseDTO>> getAllReservedArticles(@PathVariable int reservedId) {
+        List<ArticleResponseDTO> articles = articleService.getAllReservedArticlesByReservedId(reservedId);
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
     
 }

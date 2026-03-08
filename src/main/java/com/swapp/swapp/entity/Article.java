@@ -32,9 +32,8 @@ public class Article {
     private String description;
     private LocalDate date;
     private String category;
-    private String creator;
-    private String reservedBy;
-
+    private Integer userId;
+    private Integer reservedId;
 
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
