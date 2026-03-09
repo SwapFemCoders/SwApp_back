@@ -1,7 +1,11 @@
 package com.swapp.swapp.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.swapp.swapp.dto.request.UserRequestDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
@@ -9,7 +13,9 @@ import com.swapp.swapp.dto.response.UserProfileResponseDTO;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.UserRepository;
+import com.swapp.swapp.utils.FileUtil;
 
+@Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -21,8 +27,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserProfileResponseDTO createUser(UserRequestDTO userIn) {
-        User user = userMapper.toEntity(userIn);
+    public UserProfileResponseDTO createUser(UserRequestDTO userIn, MultipartFile file){
+        byte[] picture = FileUtil.convertPicture(file);
+        User user = userMapper.toEntity(userIn, picture);
         user.setPoints(3);
         userRepository.save(user);
         return userMapper.toProfileResponse(user);

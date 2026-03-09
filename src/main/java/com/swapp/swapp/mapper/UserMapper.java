@@ -10,7 +10,7 @@ import com.swapp.swapp.entity.User;
 
 @Mapper(componentModel ="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
-    User toEntity (UserRequestDTO dto);
+    User toEntity (UserRequestDTO dto, byte[] picture);
 
     UserBasicResponseDTO toBasicResponse (User user);
 

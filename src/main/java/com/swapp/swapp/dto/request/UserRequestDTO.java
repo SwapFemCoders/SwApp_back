@@ -9,8 +9,7 @@ public record UserRequestDTO(
     String userName,
     String password,
     String email,
-    String location,
-    byte[] picture
+    String location
 ) {
 
 }

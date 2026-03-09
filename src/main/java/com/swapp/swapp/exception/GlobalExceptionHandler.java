@@ -31,6 +31,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<ErrorInfo> fileError (FileException e){
+        ErrorInfo body = new ErrorInfo(400, e.getMessage());
+    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorInfo> generalError(RuntimeException e) {
         ErrorInfo body = new ErrorInfo(500, "Internal error: " + e.getMessage());
