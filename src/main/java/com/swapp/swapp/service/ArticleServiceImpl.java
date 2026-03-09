@@ -36,14 +36,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleResponseDTO> getAllAvailableArticles() {
-       List<Article> list = articleRepository.findByStatus(ArticleStatus.AVAILABLE);
-       return articleMapper.toResponseAll(list);
-       
+    List<Article> list = articleRepository.findByStatus(ArticleStatus.AVAILABLE);
+    return articleMapper.toResponseAll(list);
+
     }
 
     @Override
     public Article getArticleById(int id) {
-         Optional <Article> optionalArticle = articleRepository.findById(id);         
+        Optional <Article> optionalArticle = articleRepository.findById(id);         
         if (optionalArticle.isEmpty())
             throw new RuntimeException("The article does not exist");
         return optionalArticle.get();
@@ -68,9 +68,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId) {
-       List<Article> list = articleRepository.findByReservedId(reservedId);
-       return articleMapper.toResponseAll(list);
-         
+    List<Article> list = articleRepository.findByReservedId(reservedId);
+    return articleMapper.toResponseAll(list);
+    
     }
 }
 
