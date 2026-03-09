@@ -28,19 +28,19 @@ public class UserController {
     }
 
     @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
-   public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestPart("user") UserRequestDTO user, @RequestPart("file")MultipartFile file){
+    public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestPart("user") UserRequestDTO user, @RequestPart("file")MultipartFile file){
         UserProfileResponseDTO newUser = userService.createUser(user, file);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-      @PostMapping
-   public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestBody UserRequestDTO user){
+    @PostMapping("/id")
+    public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestBody UserRequestDTO user){
         UserProfileResponseDTO newUser = userService.createUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<UserBasicResponseDTO> getBasicUserById(@PathVariable int id) {
-       UserBasicResponseDTO user = userService.getBasicUserById(id);
+    UserBasicResponseDTO user = userService.getBasicUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
