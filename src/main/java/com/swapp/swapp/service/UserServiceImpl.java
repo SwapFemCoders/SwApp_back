@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,25 +18,30 @@ import com.swapp.swapp.entity.User;
 import com.swapp.swapp.exception.BadIdException;
 import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.UserRepository;
+import com.swapp.swapp.security.UserDetail;
 import com.swapp.swapp.utils.FileUtil;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserProfileResponseDTO createUser(UserRequestDTO userIn, MultipartFile file){
         byte[] picture = FileUtil.convertPicture(file);
         User user = userMapper.toEntity(userIn, picture);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         user.setPoints(3);
         userRepository.save(user);
         return userMapper.toProfileResponse(user);
@@ -92,6 +101,13 @@ public class UserServiceImpl implements UserService{
     public UserBasicResponseDTO getUserByEmail(String email) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUserByEmail'");
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUserName(username)
+        .map(user -> new UserDetail(user))
+        .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
 }

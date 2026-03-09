@@ -64,6 +64,10 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+// @GetMapping("/mi-id")
+// public ResponseEntity<?> testId(Authentication auth) {
+//     Integer userId = (Integer) auth.getDetails();
+//     return ResponseEntity.ok("Mi ID es: " + userId);
+// }
 
 }
