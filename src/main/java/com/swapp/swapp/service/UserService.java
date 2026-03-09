@@ -12,6 +12,7 @@ import com.swapp.swapp.entity.User;
 public interface UserService {
 
     public UserProfileResponseDTO createUser (UserRequestDTO user, MultipartFile file);
+    public UserProfileResponseDTO createUser(UserRequestDTO userIn);
 
     public User getUserById (int id);
 
