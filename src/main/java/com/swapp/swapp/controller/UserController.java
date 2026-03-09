@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.swapp.swapp.dto.request.UserRequestDTO;
+import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;
+import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,7 +31,19 @@ public class UserController {
    public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestPart("user") UserRequestDTO user, @RequestPart("file")MultipartFile file){
         UserProfileResponseDTO newUser = userService.createUser(user, file);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-
     }
-    
+
+      @PostMapping
+   public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestBody UserRequestDTO user){
+        UserProfileResponseDTO newUser = userService.createUser(user);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserBasicResponseDTO> getBasicUserById(@PathVariable int id) {
+       UserBasicResponseDTO user = userService.getBasicUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+   //@GetMapping("/profile/{id}")
+
 }
