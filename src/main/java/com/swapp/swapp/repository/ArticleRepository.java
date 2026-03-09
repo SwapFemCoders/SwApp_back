@@ -9,6 +9,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Integer>{
 
     List<Article> findByStatus(ArticleStatus status);
+    List <Article> findByReservedId (Integer reservedId);
 }
 
 
