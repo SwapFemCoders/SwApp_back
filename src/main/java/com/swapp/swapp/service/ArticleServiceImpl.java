@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.swapp.swapp.dto.request.ArticleRequestDTO;
+import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleState;
@@ -29,7 +30,6 @@ public class ArticleServiceImpl implements ArticleService {
     public Article createArticle(Article article) {
         article.setStatus(ArticleStatus.AVAILABLE);
         
-
         return articleRepository.save(article);
 
     }
@@ -43,25 +43,35 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getArticleById(int id) {
-         Optional <Article> optionalArticle = articleRepository.findById(id);
+         Optional <Article> optionalArticle = articleRepository.findById(id);         
         if (optionalArticle.isEmpty())
-            throw new RuntimeException("No existe el articulo");
+            throw new RuntimeException("The article does not exist");
         return optionalArticle.get();
-
     }
 
     @Override
     public void deleteArticle(int id) {
         Optional <Article> optionalArticle = articleRepository.findById(id);
         if (optionalArticle.isEmpty())
-            throw new RuntimeException("No existe el articulo");
+            throw new RuntimeException("The article does not exist");
         articleRepository.delete(optionalArticle.get());
     }
 
     @Override
-    public Article createArticle(ArticleRequestDTO dto) {
-       Article art = articleMapper.toEntity(dto);
-        return articleRepository.save(art);
+    public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id) {
+    Optional<Article> optionalArticle = articleRepository.findById(id);
+    if (optionalArticle.isEmpty())
+        throw new RuntimeException("The article does not exist");
+    
+    return articleMapper.toBasicDTO(optionalArticle.get());
     }
 
+    @Override
+    public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId) {
+       List<Article> list = articleRepository.findByReservedId(reservedId);
+       return articleMapper.toResponseAll(list);
+         
+    }
 }
+
+
