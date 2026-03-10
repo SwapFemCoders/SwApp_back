@@ -7,8 +7,8 @@ public record UserRequestDTO(
     String name,
     String lastName,
     String userName,
-    String password,
     String email,
+    String password,
     String location
 ) {
 

@@ -25,6 +25,14 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
+    @Override
+    public UserProfileResponseDTO createUser(UserRequestDTO userIn){
+        byte[] picture = null;
+        User user = userMapper.toEntity(userIn, picture);
+        user.setPoints(3);
+        userRepository.save(user);
+        return userMapper.toProfileResponse(user);
+    }
 
     @Override
     public UserProfileResponseDTO createUser(UserRequestDTO userIn, MultipartFile file){
