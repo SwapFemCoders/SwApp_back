@@ -31,6 +31,7 @@ public class SpringConfig {
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http
+            .cors(cors -> {}) 
             .csrf(csfr -> csfr.disable())
             // .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
             .authorizeHttpRequests(request -> request
