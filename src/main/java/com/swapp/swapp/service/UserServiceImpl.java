@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setPoints(3);
-        userRepository.save(user);
+        userRepository.save(user);        
         return userMapper.toProfileResponse(user);
     }
     @Override

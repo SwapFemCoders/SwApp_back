@@ -7,7 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +33,14 @@ public class Article {
     private String description;
     private LocalDate date;
     private String category;
-    private Integer userId;
-    private Integer reservedId;
+
+    @ManyToOne
+    @JoinColumn (name="creatorId", nullable =false, referencedColumnName = "id")
+    private User creatorId;
+
+    @ManyToOne
+    @JoinColumn (name="reservedId", nullable =true, referencedColumnName = "id")
+    private User reservedId;
 
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
