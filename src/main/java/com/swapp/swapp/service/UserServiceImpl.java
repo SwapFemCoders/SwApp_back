@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
         byte[] picture = FileUtil.convertPicture(file);
         User user = userMapper.toEntity(userIn, picture);
         user.setPoints(3);
-        userRepository.save(user);
+        userRepository.save(user);        
         return userMapper.toProfileResponse(user);
     }
     @Override

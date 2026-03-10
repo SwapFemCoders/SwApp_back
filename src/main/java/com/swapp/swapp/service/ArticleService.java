@@ -1,10 +1,11 @@
 package com.swapp.swapp.service;
 import java.util.List;
 
-import com.swapp.swapp.dto.request.ArticleRequestDTO;
+
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
+import com.swapp.swapp.entity.User;
 
 public interface ArticleService {
 
@@ -14,7 +15,8 @@ public interface ArticleService {
     public void deleteArticle(int id);
     //public Article createArticle (ArticleRequestDTO dto);
     public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id);
-    public List <ArticleResponseDTO> getAllReservedArticlesByReservedId (int userId);
+    public List <ArticleResponseDTO> getAllReservedArticlesByReservedId (int reservedId);
+    public List <ArticleResponseDTO> getAllAvailableArticlesByCreatorId (int creator_id);
    
 
     

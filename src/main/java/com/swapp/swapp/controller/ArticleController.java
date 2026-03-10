@@ -69,4 +69,9 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
     
+    @GetMapping ("/user/available/{creatorId}")
+    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticlesByCreatorId(@PathVariable int creatorId){
+        List<ArticleResponseDTO> articles= articleService.getAllAvailableArticlesByCreatorId(creatorId);
+        return new ResponseEntity<> (articles, HttpStatus.OK);
+    }
 }

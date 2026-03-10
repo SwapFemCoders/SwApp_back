@@ -38,9 +38,9 @@ public class User {
 
     private String name;
     
-    private String lastName;
+    private String lastname;
     @Column(unique = true, nullable = false, length = 50)
-    private String userName;
+    private String username;
 
     @Column(nullable = false, length = 15)
     private String password;
@@ -53,7 +53,7 @@ public class User {
     @Column(name = "picture", columnDefinition = "bytea") 
     private byte[] picture;
 
-    @Column(nullable = false)
+     @Column(nullable = false)
     private int points;
 
 //     @OneToMany(mappedBy="users", cascade= CascadeType.ALL)

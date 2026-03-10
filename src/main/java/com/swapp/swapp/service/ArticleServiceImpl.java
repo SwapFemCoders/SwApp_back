@@ -11,8 +11,11 @@ import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleState;
 import com.swapp.swapp.entity.ArticleStatus;
+import com.swapp.swapp.entity.User;
 import com.swapp.swapp.mapper.ArticleMapper;
+import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.ArticleRepository;
+import com.swapp.swapp.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,9 +24,15 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleMapper articleMapper;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, ArticleMapper articleMapper) {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    public ArticleServiceImpl(ArticleRepository articleRepository, ArticleMapper articleMapper, UserRepository userRepository, UserMapper userMapper) {
         this.articleRepository = articleRepository;
         this.articleMapper =articleMapper;
+
+        this.userMapper = userMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -66,12 +75,24 @@ public class ArticleServiceImpl implements ArticleService {
     return articleMapper.toBasicDTO(optionalArticle.get());
     }
 
+    //Articulos reservados por un ID X que se le pasa a la función
     @Override
     public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId) {
-       List<Article> list = articleRepository.findByReservedId(reservedId);
+       User user = userRepository.findById(reservedId).orElseThrow();
+       List<Article> list = articleRepository.findByReservedId(user);
        return articleMapper.toResponseAll(list);
          
     }
+
+    //Articulos que yo cree y están disponibles
+    @Override
+    public List <ArticleResponseDTO> getAllAvailableArticlesByCreatorId(int creatorId){
+        User user = userRepository.findById(creatorId).orElseThrow();
+        List <Article> list = articleRepository.findByCreatorIdAndStatus(user, ArticleStatus.AVAILABLE);
+        return articleMapper.toResponseAll (list);
+    }
+
+    //Articulos que yo cree y alguien más los reservó
 }
 
 
