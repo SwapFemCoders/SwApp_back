@@ -10,12 +10,17 @@ import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -33,17 +38,36 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/id")
-    public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestBody UserRequestDTO user){
-        UserProfileResponseDTO newUser = userService.createUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserBasicResponseDTO> getBasicUserById(@PathVariable int id) {
     UserBasicResponseDTO user = userService.getBasicUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-   //@GetMapping("/profile/{id}")
+   @GetMapping("/profile/{id}")
+   public ResponseEntity<UserProfileResponseDTO> getFullUserById(@PathVariable int id) {
+    UserProfileResponseDTO user = userService.getFullUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<HttpStatus> updateUSer(@PathVariable int id, 
+                                                @Valid @RequestPart("user") UserRequestDTO user,
+                                                @RequestPart(value ="file", required = false) MultipartFile file) {
+        userService.updateUser(id, user, file);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+// @GetMapping("/mi-id")
+// public ResponseEntity<?> testId(Authentication auth) {
+//     Integer userId = (Integer) auth.getDetails();
+//     return ResponseEntity.ok("Mi ID es: " + userId);
+// }
 
 }
