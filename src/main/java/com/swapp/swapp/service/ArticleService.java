@@ -17,7 +17,7 @@ public interface ArticleService {
     public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id);
     public List <ArticleResponseDTO> getAllReservedArticlesByReservedId (int reservedId);
     public List <ArticleResponseDTO> getAllAvailableArticlesByCreatorId (int creator_id);
-   
+    
 
     
 }
