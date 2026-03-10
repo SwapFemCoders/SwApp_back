@@ -38,9 +38,9 @@ public class User {
 
     private String name;
     
-    private String lastname;
+    private String lastName;
     @Column(unique = true, nullable = false, length = 50)
-    private String username;
+    private String userName;
 
     @Column(nullable = false)
     private String password;
