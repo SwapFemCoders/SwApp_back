@@ -35,11 +35,11 @@ public class Article {
     private String category;
 
     @ManyToOne
-    @JoinColumn (name="creatorId", nullable =false, referencedColumnName = "id")
+    @JoinColumn (name="creator_id", nullable =false, referencedColumnName = "id")
     private User creatorId;
 
     @ManyToOne
-    @JoinColumn (name="reservedId", nullable =true, referencedColumnName = "id")
+    @JoinColumn (name="reserved_id", nullable =true, referencedColumnName = "id")
     private User reservedId;
 
     @Enumerated(EnumType.STRING)
