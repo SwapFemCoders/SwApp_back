@@ -24,7 +24,7 @@ public interface ArticleService {
 
     public List<ArticleResponseDTO> getAllAvailableArticlesByCreatorId(int creator_id);
 
-    public Article reservedArticle(int articleId);
+    // public Article reservedArticle(int articleId);
 
     public Article toggleReservation(int articleId, int authenticatedUserId);
 

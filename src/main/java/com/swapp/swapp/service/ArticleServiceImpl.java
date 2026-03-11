@@ -93,47 +93,21 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.toResponseAll (list);
     }
 
-
     @Override
-    public Article reservedArticle (int articleid){
-        optional <Article> optionalArticle= articleRepository.findById (articleid);
-        if (optionalArticle.isEmpty ()){
-            throw new RuntimeException ("The article does not exist");   
-        }
-        Article article= optionalArticle.get();
-        if (!article.getStatus().equals (ArticleStatus.AVAILABLE)){
-        throw new RuntimeException ("The article is not available for reservation");
-
-        }
-
-        Optional <AuthenticatedUserId> optionalAuthenticatedUserId= userRepository.findById (authenticatedUserId);
-        if (optionalAuthenticatedUserId.isEmpty ()){
-            throw new RuntimeException ("The user does no exist");
-        }
-
-       AuthenticatedUserId authenticatedUserId=optionalAuthenticatedUserId.get ();
-
-        article.setStatus (ArticleStatus.RESERVED);
-        article.setReservedId(authenticatedUserId);
-
-        return articleRepository.save (article);
-    }
-
-    @Override
-public Article toggleReservation(int articleId, int authenticatedUserId) {
+public Article toggleReservation(int articleId, int userId) {
     Optional<Article> opt = articleRepository.findById(articleId);
     if (opt.isEmpty()) throw new RuntimeException("The article does not exist");
     Article article = opt.get();
 
     if (article.getStatus().equals(ArticleStatus.AVAILABLE)) {
         //reservarlo
-        AuthenticatedUserId authenticatedUserId = userRepository.findById(authenticatedUserId)
+        User authenticatedUser = userRepository.findById(userId)
        .orElseThrow(() -> new RuntimeException("The user does not exist"));
-        article.setReservedId(authenticatedUserId);
+        article.setReservedId(authenticatedUser);
         article.setStatus(ArticleStatus.RESERVED);
     } else if (article.getStatus().equals(ArticleStatus.RESERVED)
             && article.getReservedId() != null
-            && article.getReservedId().getId().equals(authenticatedUserId)) {
+            && article.getReservedId().getId().equals(userId)) {
         // liberar la propia reserva
         article.setReservedId(null);
         article.setStatus(ArticleStatus.AVAILABLE);
