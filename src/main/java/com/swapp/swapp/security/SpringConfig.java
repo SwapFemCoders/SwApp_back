@@ -31,14 +31,17 @@ public class SpringConfig {
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http
+            .cors(cors -> {}) 
             .csrf(csfr -> csfr.disable())
             // .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers( "/api/v1/users").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/articles/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/articles").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/users").authenticated()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             )
             .addFilter(authenticationFilter)
             .addFilterAfter(new JWTAuthorizationFilter(jwtSecret), JWTAuthenticationFilter.class)
