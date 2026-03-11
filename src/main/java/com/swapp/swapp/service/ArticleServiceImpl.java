@@ -3,6 +3,7 @@ package com.swapp.swapp.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.swapp.swapp.dto.request.ArticleRequestDTO;
@@ -92,7 +93,57 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.toResponseAll (list);
     }
 
-    //Articulos que yo cree y alguien más los reservó
+
+    @Override
+    public Article reservedArticle (int articleid){
+        optional <Article> optionalArticle= articleRepository.findById (articleid);
+        if (optionalArticle.isEmpty ()){
+            throw new RuntimeException ("The article does not exist");   
+        }
+        Article article= optionalArticle.get();
+        if (!article.getStatus().equals (ArticleStatus.AVAILABLE)){
+        throw new RuntimeException ("The article is not available for reservation");
+
+        }
+
+        Optional <AuthenticatedUserId> optionalAuthenticatedUserId= userRepository.findById (authenticatedUserId);
+        if (optionalAuthenticatedUserId.isEmpty ()){
+            throw new RuntimeException ("The user does no exist");
+        }
+
+       AuthenticatedUserId authenticatedUserId=optionalAuthenticatedUserId.get ();
+
+        article.setStatus (ArticleStatus.RESERVED);
+        article.setReservedId(authenticatedUserId);
+
+        return articleRepository.save (article);
+    }
+
+    @Override
+public Article toggleReservation(int articleId, int authenticatedUserId) {
+    Optional<Article> opt = articleRepository.findById(articleId);
+    if (opt.isEmpty()) throw new RuntimeException("The article does not exist");
+    Article article = opt.get();
+
+    if (article.getStatus().equals(ArticleStatus.AVAILABLE)) {
+        //reservarlo
+        AuthenticatedUserId authenticatedUserId = userRepository.findById(authenticatedUserId)
+       .orElseThrow(() -> new RuntimeException("The user does not exist"));
+        article.setReservedId(authenticatedUserId);
+        article.setStatus(ArticleStatus.RESERVED);
+    } else if (article.getStatus().equals(ArticleStatus.RESERVED)
+            && article.getReservedId() != null
+            && article.getReservedId().getId().equals(authenticatedUserId)) {
+        // liberar la propia reserva
+        article.setReservedId(null);
+        article.setStatus(ArticleStatus.AVAILABLE);
+    } else {
+        throw new RuntimeException("Cannot toggle reservation for this article");
+    }
+
+    return articleRepository.save(article);
+}
+
 }
 
 
