@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.security.CustomAuthenticationManager;
 import com.swapp.swapp.security.UserDetail;
@@ -54,18 +55,31 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         UserDetail userDetail = (UserDetail) authResult.getPrincipal();
-        Integer userId = userDetail.getUser().getId();
+        User user = userDetail.getUser();
+        //Integer userId = userDetail.getUser().getId();
         // List<String> roles = authResult.getAuthorities().stream()
         //         .map(grantedAuthority -> grantedAuthority.getAuthority().replace("ROLE_", ""))
         //         .collect(Collectors.toList());
 
         String token = JWT.create()
                 .withSubject(authResult.getName())
-                .withClaim("userId", userId)
+                .withClaim("userId", user.getId())
                 // .withClaim("roles", roles)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (5 * 60000)))
                 .sign(Algorithm.HMAC512(this.secret));
+
+                UserBasicResponseDTO userDto = new UserBasicResponseDTO(
+                    user.getId(),
+                    user.getUserName(),
+                    user.getLocation(),
+                    user.getPicture()
+                );
+
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        new ObjectMapper().writeValue(response.getWriter(), userDto);
     }
 
 }

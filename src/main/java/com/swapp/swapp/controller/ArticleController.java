@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
+import com.swapp.swapp.exception.UnauthorizedException;
 import com.swapp.swapp.service.ArticleService;
 
 import java.io.IOException;
@@ -80,21 +81,21 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    @PutMapping("/{articleId}/reserve")
-    public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
-        int userId = getAuthenticatedUserId();
-        Article reserveArticle = articleService.reservedArticle(articleId, userId);
-        return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
+//     @PutMapping("/{articleId}/reserve")
+//     public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
+//         int userId = getAuthenticatedUserId();
+//         Article reserveArticle = articleService.reservedArticle(articleId, userId);
+//         return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
 
-    }
+//     }
 
-    private Integer getAuthenticatedUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getDetails() != null) {
-            return (Integer) auth.getDetails();
-        }
-        return null;
-    }
+//     private Integer getAuthenticatedUserId() {
+//         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//         if (auth != null && auth.getDetails() != null) {
+//             return (Integer) auth.getDetails();
+//         }
+//         return null;
+//     }
 
     @PutMapping("/{articleId}/reserve")
     public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
@@ -105,69 +106,13 @@ public class ArticleController {
 
 private Integer getAuthenticatedUserId() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth != null && auth.getDetails() != null) {
-        return (Integer) auth.getDetails();
+    if (auth == null || !auth.isAuthenticated() || auth.getName().equals("anonymousUser")){
+        throw new UnauthorizedException("Invalid or expired session");
     }
-    return null;
-
-    @PutMapping("/{articleId}/reserve")
-    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
-        int userId = getAuthenticatedUserId();
-        Article toggled = articleService.toggleReservation(articleId, userId);
-        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    if (!(auth.getDetails() instanceof Integer)) {
+        throw new UnauthorizedException("invalid session");
     }
+    return (Integer) auth.getDetails();
+}
 
-    private Integer getAuthenticatedUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getDetails() != null) {
-            return (Integer) auth.getDetails();
-        }
-        return null;
-    }
-
-    @PutMapping("/{articleId}/reserve")
-    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
-        int userId = getAuthenticatedUserId();
-        Article toggled = articleService.toggleReservation(articleId, userId);
-        return new ResponseEntity<>(toggled, HttpStatus.OK);
-    }
-
-    private Integer getAuthenticatedUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getDetails() != null) {
-            return (Integer) auth.getDetails();
-        }
-        return null;
-    }
-
-    @PutMapping("/{articleId}/reserve")
-    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
-        int userId = getAuthenticatedUserId();
-        Article toggled = articleService.toggleReservation(articleId, userId);
-        return new ResponseEntity<>(toggled, HttpStatus.OK);
-    }
-
-    private Integer getAuthenticatedUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getDetails() != null) {
-            return (Integer) auth.getDetails();
-        }
-        return null;
-    }
-
-    @PutMapping("/{articleId}/reserve")
-    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
-        int userId = getAuthenticatedUserId();
-        Article toggled = articleService.toggleReservation(articleId, userId);
-        return new ResponseEntity<>(toggled, HttpStatus.OK);
-    }
-
-    private Integer getAuthenticatedUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getDetails() != null) {
-            return (Integer) auth.getDetails();
-            return null;
-
-        }
-    }
 }
