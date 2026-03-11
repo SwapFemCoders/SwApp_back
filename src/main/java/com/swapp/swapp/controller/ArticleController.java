@@ -16,15 +16,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/api/v1/articles")
 public class ArticleController {
 
-   
     private final ArticleService articleService;
 
     public ArticleController(ArticleService articleService) {
@@ -32,7 +34,8 @@ public class ArticleController {
     }
 
     @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Article> createArticle(@RequestPart("article") Article article, @RequestPart("file")MultipartFile file) throws IOException {
+    public ResponseEntity<Article> createArticle(@RequestPart("article") Article article,
+            @RequestPart("file") MultipartFile file) throws IOException {
         article.setPicture(file.getBytes());
         Article newArticle = articleService.createArticle(article);
         return new ResponseEntity<>(newArticle, HttpStatus.CREATED);
@@ -45,11 +48,13 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    /* @GetMapping ("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable int id) {
-       Article article = articleService.getArticleById(id);
-        return new ResponseEntity<>(article, HttpStatus.OK);
-    } */
+    /*
+     * @GetMapping ("/{id}")
+     * public ResponseEntity<Article> getArticleById(@PathVariable int id) {
+     * Article article = articleService.getArticleById(id);
+     * return new ResponseEntity<>(article, HttpStatus.OK);
+     * }
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteArticle(@PathVariable int id) {
@@ -57,21 +62,112 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping ("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ArticleBasicResponseDTO> getArticleById(@PathVariable int id) {
-       ArticleBasicResponseDTO article = articleService.getArticleBasicResponseDTOById(id);
+        ArticleBasicResponseDTO article = articleService.getArticleBasicResponseDTOById(id);
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
-      
+
     @GetMapping("/reserved/{reservedId}")
     public ResponseEntity<List<ArticleResponseDTO>> getAllReservedArticles(@PathVariable int reservedId) {
         List<ArticleResponseDTO> articles = articleService.getAllReservedArticlesByReservedId(reservedId);
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
-    
-    @GetMapping ("/user/available/{creatorId}")
-    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticlesByCreatorId(@PathVariable int creatorId){
-        List<ArticleResponseDTO> articles= articleService.getAllAvailableArticlesByCreatorId(creatorId);
-        return new ResponseEntity<> (articles, HttpStatus.OK);
+
+    @GetMapping("/user/available/{creatorId}")
+    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticlesByCreatorId(@PathVariable int creatorId) {
+        List<ArticleResponseDTO> articles = articleService.getAllAvailableArticlesByCreatorId(creatorId);
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article reserveArticle = articleService.reservedArticle(articleId, userId);
+        return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
+
+    }
+
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getDetails() != null) {
+            return (Integer) auth.getDetails();
+        }
+        return null;
+    }
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article toggled = articleService.toggleReservation(articleId, userId);
+        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    }
+
+private Integer getAuthenticatedUserId() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null && auth.getDetails() != null) {
+        return (Integer) auth.getDetails();
+    }
+    return null;
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article toggled = articleService.toggleReservation(articleId, userId);
+        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    }
+
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getDetails() != null) {
+            return (Integer) auth.getDetails();
+        }
+        return null;
+    }
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article toggled = articleService.toggleReservation(articleId, userId);
+        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    }
+
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getDetails() != null) {
+            return (Integer) auth.getDetails();
+        }
+        return null;
+    }
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article toggled = articleService.toggleReservation(articleId, userId);
+        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    }
+
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getDetails() != null) {
+            return (Integer) auth.getDetails();
+        }
+        return null;
+    }
+
+    @PutMapping("/{articleId}/reserve")
+    public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
+        int userId = getAuthenticatedUserId();
+        Article toggled = articleService.toggleReservation(articleId, userId);
+        return new ResponseEntity<>(toggled, HttpStatus.OK);
+    }
+
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getDetails() != null) {
+            return (Integer) auth.getDetails();
+            return null;
+
+        }
     }
 }

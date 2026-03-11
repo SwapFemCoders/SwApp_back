@@ -1,6 +1,6 @@
 package com.swapp.swapp.service;
-import java.util.List;
 
+import java.util.List;
 
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
@@ -9,15 +9,23 @@ import com.swapp.swapp.entity.User;
 
 public interface ArticleService {
 
-    public Article createArticle (Article article);
-    public List<ArticleResponseDTO> getAllAvailableArticles();
-    public Article getArticleById(int id);
-    public void deleteArticle(int id);
-    //public Article createArticle (ArticleRequestDTO dto);
-    public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id);
-    public List <ArticleResponseDTO> getAllReservedArticlesByReservedId (int reservedId);
-    public List <ArticleResponseDTO> getAllAvailableArticlesByCreatorId (int creator_id);
-   
+    public Article createArticle(Article article);
 
-    
+    public List<ArticleResponseDTO> getAllAvailableArticles();
+
+    public Article getArticleById(int id);
+
+    public void deleteArticle(int id);
+
+    // public Article createArticle (ArticleRequestDTO dto);
+    public ArticleBasicResponseDTO getArticleBasicResponseDTOById(int id);
+
+    public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId);
+
+    public List<ArticleResponseDTO> getAllAvailableArticlesByCreatorId(int creator_id);
+
+    public Article reservedArticle(int articleId);
+
+    public Article toggleReservation(int articleId, int authenticatedUserId);
+
 }
