@@ -55,7 +55,7 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id")
-    private UserBasicResponseDTO creatorId;
+    private User creatorId;
 
     @ManyToOne
     @JoinColumn(name = "reserved_id", nullable = true, referencedColumnName = "id")
