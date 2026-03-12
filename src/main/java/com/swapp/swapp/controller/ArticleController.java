@@ -35,10 +35,10 @@ public class ArticleController {
     }
 
     @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Article> createArticle(@RequestPart("article") Article article,
+    public ResponseEntity<ArticleBasicResponseDTO> createArticle(@RequestPart("article") Article article,
             @RequestPart("file") MultipartFile file) throws IOException {
         article.setPicture(file.getBytes());
-        Article newArticle = articleService.createArticle(article);
+        ArticleBasicResponseDTO newArticle = articleService.createArticle(article);
         return new ResponseEntity<>(newArticle, HttpStatus.CREATED);
 
     }
