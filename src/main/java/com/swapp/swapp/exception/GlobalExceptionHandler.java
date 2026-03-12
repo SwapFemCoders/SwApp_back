@@ -15,6 +15,12 @@ import com.swapp.swapp.dto.ErrorInfo;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorInfo> handleUnauthorized(UnauthorizedException ex) {
+        ErrorInfo error = new ErrorInfo(401,"unauthorized: "+ ex.getMessage());
+        return new ResponseEntity<>(error,HttpStatus.UNAUTHORIZED);
+    }
+    
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorInfo> handleValidationErrors(MethodArgumentNotValidException e) {
         

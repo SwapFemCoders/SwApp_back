@@ -1,6 +1,6 @@
 package com.swapp.swapp.dto.request;
 
-import jakarta.persistence.Column;
+
 
 public record UserRequestDTO(
     Integer id,

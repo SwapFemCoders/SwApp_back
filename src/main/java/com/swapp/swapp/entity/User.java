@@ -1,33 +1,34 @@
 package com.swapp.swapp.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+// import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+// import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+//import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+// import jakarta.persistence.JoinColumn;
+// import jakarta.persistence.JoinTable;
+// import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+//import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+// import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,39 +37,51 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
-    
+
+    @NotBlank(message = "Last name cannot be empty")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
+
+    @NotBlank(message = "Username cannot be empty")
+    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     @Column(unique = true, nullable = false, length = 50)
     private String userName;
 
-    @Column(nullable = false, length = 15)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 6, max = 200, message = "Password must be between 6 and 200 characters")
+    @Column(nullable = false)
     private String password;
 
+    @NotBlank(message = "Email cannot be empty")
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Size(max = 50, message = "Location must not exceed 50 characters")
     private String location;
 
-    @Column(name = "picture", columnDefinition = "bytea") 
+    @Column(name = "picture", columnDefinition = "bytea")
     private byte[] picture;
 
+    @Min(value = 0, message = "Points cannot be negative")
     @Column(nullable = false)
     private int points;
 
-//     @OneToMany(mappedBy="users", cascade= CascadeType.ALL)
-//     @JsonIgnore
-//     private List<Article> createdArticles = new ArrayList<>();
+    @OneToMany(mappedBy="creatorId", cascade= CascadeType.ALL)
+    @JsonIgnore
+    private List<Article> createdArticles = new ArrayList<>();
 
-//     @OneToMany(mappedBy="users", cascade= CascadeType.ALL)
-//     @JsonIgnore
-//     private List<Article> reservedArticles = new ArrayList<>();
+    @OneToMany(mappedBy="reservedId", cascade= CascadeType.ALL)
+    @JsonIgnore
+    private List<Article> reservedArticles = new ArrayList<>();
 
-
-//     @ManyToMany(fetch = FetchType.LAZY)
-//     @JoinTable(
-//         name = "favorites_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "article_id")
-//     )
-//     private Set<Article> favorites = new HashSet<>();
+    // @ManyToMany(fetch = FetchType.LAZY)
+    // @JoinTable(
+    // name = "favorites_user", joinColumns = @JoinColumn(name = "user_id"),
+    // inverseJoinColumns = @JoinColumn(name = "article_id")
+    // )
+    // private Set<Article> favorites = new HashSet<>();
 
 }

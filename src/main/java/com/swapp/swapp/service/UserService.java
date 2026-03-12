@@ -2,6 +2,7 @@ package com.swapp.swapp.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.swapp.swapp.dto.request.UserRequestDTO;
@@ -12,7 +13,6 @@ import com.swapp.swapp.entity.User;
 public interface UserService {
 
     public UserProfileResponseDTO createUser (UserRequestDTO user, MultipartFile file);
-    public UserProfileResponseDTO createUser(UserRequestDTO userIn);
 
     public User getUserById (int id);
 
@@ -24,10 +24,12 @@ public interface UserService {
 
     public UserBasicResponseDTO getUserByEmail(String email);
 
-    public User updateUser (User user);
+    public void updateUser (int id, UserRequestDTO user, MultipartFile file);
 
     public void toFavorites (int articleId, int userId);
 
     public void deleteUser (int id);
+
+    UserDetails loadUserByUsername(String username);
 
 }
