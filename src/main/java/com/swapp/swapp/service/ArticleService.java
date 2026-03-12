@@ -2,7 +2,10 @@ package com.swapp.swapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
+
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
 
@@ -26,5 +29,7 @@ public interface ArticleService {
     // public Article reservedArticle(int articleId);
 
     public Article toggleReservation(int articleId, int authenticatedUserId);
+
+    public Page<ArticleResponseDTO> getArticlesPaged(int page);
 
 }

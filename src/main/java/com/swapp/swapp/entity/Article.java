@@ -19,6 +19,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
+import com.swapp.swapp.dto.response.UserBasicResponseDTO;
+
 @Entity
 @Table(name = "articles")
 @Data
@@ -49,11 +51,11 @@ public class Article {
 
     @NotBlank(message = "Category cannot be empty")
     @Size(min = 2, max = 50, message = "Category must be between 2 and 50 characters")
-    private String category;
+    private ArticleCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false, referencedColumnName = "id")
-    private User creatorId;
+    @JoinColumn(name = "creator_id", referencedColumnName = "id")
+    private UserBasicResponseDTO creatorId;
 
     @ManyToOne
     @JoinColumn(name = "reserved_id", nullable = true, referencedColumnName = "id")
