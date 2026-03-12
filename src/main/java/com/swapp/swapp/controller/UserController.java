@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -33,7 +32,8 @@ public class UserController {
     }
 
     @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UserProfileResponseDTO> createUSer(@RequestPart("user") UserRequestDTO user, @RequestPart("file")MultipartFile file){
+    public ResponseEntity<UserProfileResponseDTO> createUSer(
+        @RequestPart("user") UserRequestDTO user, @RequestPart("file")MultipartFile file){
         UserProfileResponseDTO newUser = userService.createUser(user, file);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }

@@ -81,13 +81,13 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-//     @PutMapping("/{articleId}/reserve")
-//     public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
-//         int userId = getAuthenticatedUserId();
+//  @PutMapping("/{articleId}/reserve")
+//    public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
+//        int userId = getAuthenticatedUserId();
 //         Article reserveArticle = articleService.reservedArticle(articleId, userId);
-//         return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
+//        return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
 
-//     }
+//  }
 
 //     private Integer getAuthenticatedUserId() {
 //         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
