@@ -56,13 +56,13 @@ public class User {
      @Column(nullable = false)
     private int points;
 
-//     @OneToMany(mappedBy="users", cascade= CascadeType.ALL)
-//     @JsonIgnore
-//     private List<Article> createdArticles = new ArrayList<>();
+    @OneToMany(mappedBy="creatorId", cascade= CascadeType.ALL)
+    @JsonIgnore
+    private List<Article> createdArticles = new ArrayList<>();
 
-//     @OneToMany(mappedBy="users", cascade= CascadeType.ALL)
-//     @JsonIgnore
-//     private List<Article> reservedArticles = new ArrayList<>();
+    @OneToMany(mappedBy="reservedId", cascade= CascadeType.ALL)
+    @JsonIgnore
+    private List<Article> reservedArticles = new ArrayList<>();
 
 
 //     @ManyToMany(fetch = FetchType.LAZY)
