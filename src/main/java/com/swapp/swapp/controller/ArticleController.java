@@ -7,6 +7,7 @@ import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.entity.Article;
+import com.swapp.swapp.entity.User;
 import com.swapp.swapp.exception.UnauthorizedException;
 import com.swapp.swapp.service.ArticleService;
 import com.swapp.swapp.service.UserService;
@@ -39,7 +40,7 @@ public class ArticleController {
 
     public ArticleController(ArticleService articleService, UserService userService) {
         this.articleService = articleService;
-        this.userService=userService;
+        this.userService = userService;
     }
 
     @GetMapping("/paginated")
@@ -52,11 +53,8 @@ public class ArticleController {
     @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArticleBasicResponseDTO> createArticle(@RequestPart("article") Article article,
             @RequestPart("file") MultipartFile file) throws IOException {
-                UserBasicResponseDTO createUser=    userService.getBasicUserById (getAuthenticatedUserId());
-                article.setCreatorId(createUser);
-
-
-
+        User creator = userService.getUserById(getAuthenticatedUserId());
+        article.setCreatorId(creator);
 
         article.setPicture(file.getBytes());
         ArticleBasicResponseDTO newArticle = articleService.createArticle(article);
@@ -102,21 +100,21 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-//  @PutMapping("/{articleId}/reserve")
-//    public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
-//        int userId = getAuthenticatedUserId();
-//         Article reserveArticle = articleService.reservedArticle(articleId, userId);
-//        return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
+    // @PutMapping("/{articleId}/reserve")
+    // public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
+    // int userId = getAuthenticatedUserId();
+    // Article reserveArticle = articleService.reservedArticle(articleId, userId);
+    // return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
 
-//  }
+    // }
 
-//     private Integer getAuthenticatedUserId() {
-//         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//         if (auth != null && auth.getDetails() != null) {
-//             return (Integer) auth.getDetails();
-//         }
-//         return null;
-//     }
+    // private Integer getAuthenticatedUserId() {
+    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // if (auth != null && auth.getDetails() != null) {
+    // return (Integer) auth.getDetails();
+    // }
+    // return null;
+    // }
 
     @PutMapping("/{articleId}/reserve")
     public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {
@@ -125,15 +123,15 @@ public class ArticleController {
         return new ResponseEntity<>(toggled, HttpStatus.OK);
     }
 
-private Integer getAuthenticatedUserId() {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth == null || !auth.isAuthenticated() || auth.getName().equals("anonymousUser")){
-        throw new UnauthorizedException("Invalid or expired session");
+    private Integer getAuthenticatedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth.getName().equals("anonymousUser")) {
+            throw new UnauthorizedException("Invalid or expired session");
+        }
+        if (!(auth.getDetails() instanceof Integer)) {
+            throw new UnauthorizedException("invalid session");
+        }
+        return (Integer) auth.getDetails();
     }
-    if (!(auth.getDetails() instanceof Integer)) {
-        throw new UnauthorizedException("invalid session");
-    }
-    return (Integer) auth.getDetails();
-}
 
 }

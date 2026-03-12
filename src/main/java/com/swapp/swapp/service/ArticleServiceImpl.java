@@ -44,7 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleBasicResponseDTO createArticle(Article article) {
         article.setStatus(ArticleStatus.AVAILABLE);
-        articleRepository.save(article);
+git        articleRepository.save(article);
         return articleMapper.toBasicDTO(article);
 
     }
