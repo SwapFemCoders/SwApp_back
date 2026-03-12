@@ -37,10 +37,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article createArticle(Article article) {
+    public ArticleBasicResponseDTO createArticle(Article article) {
         article.setStatus(ArticleStatus.AVAILABLE);
-        
-        return articleRepository.save(article);
+        articleRepository.save(article);
+        return articleMapper.toBasicDTO(article);
 
     }
 

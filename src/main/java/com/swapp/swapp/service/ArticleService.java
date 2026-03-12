@@ -5,11 +5,10 @@ import java.util.List;
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
-import com.swapp.swapp.entity.User;
 
 public interface ArticleService {
 
-    public Article createArticle(Article article);
+    public ArticleBasicResponseDTO createArticle(Article article);
 
     public List<ArticleResponseDTO> getAllAvailableArticles();
 
