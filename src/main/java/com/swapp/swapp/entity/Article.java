@@ -19,6 +19,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
+import com.swapp.swapp.dto.response.UserBasicResponseDTO;
+
 @Entity
 @Table(name = "articles")
 @Data
@@ -51,7 +53,7 @@ public class Article {
     private ArticleCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "creator_id", referencedColumnName = "id")
     private User creatorId;
 
     @ManyToOne

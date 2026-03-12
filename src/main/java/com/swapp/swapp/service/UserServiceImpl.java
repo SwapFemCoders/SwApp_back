@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         userRepository.save(updatedUser);
     }
        
-       
     }
 
     @Override
