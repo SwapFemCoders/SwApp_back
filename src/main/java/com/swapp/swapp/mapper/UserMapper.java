@@ -5,7 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-
 import com.swapp.swapp.dto.request.UserRequestDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;

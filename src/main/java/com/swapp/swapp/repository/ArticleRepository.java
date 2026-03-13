@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleStatus;
 import com.swapp.swapp.entity.User;
-
 import java.util.List;
 
 

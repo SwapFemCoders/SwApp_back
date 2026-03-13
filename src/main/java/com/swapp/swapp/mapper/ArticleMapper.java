@@ -1,11 +1,9 @@
 package com.swapp.swapp.mapper;
 
 import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-
 import com.swapp.swapp.dto.request.ArticleRequestDTO;
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;

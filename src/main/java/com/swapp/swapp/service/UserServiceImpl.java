@@ -1,16 +1,12 @@
 package com.swapp.swapp.service;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.swapp.swapp.dto.request.UserRequestDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;
@@ -20,7 +16,6 @@ import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.UserRepository;
 import com.swapp.swapp.security.UserDetail;
 import com.swapp.swapp.utils.FileUtil;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -74,32 +69,13 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         if (file != null && !file.isEmpty()) {
         updatedUser.setPicture(FileUtil.convertPicture(file));
         userRepository.save(updatedUser);
-    }
-       
-    }
-
-    @Override
-    public void toFavorites(int articleId, int userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toFavorites'");
+    }  
     }
 
     @Override
     public void deleteUser(int id) {
       User user = getUserById(id);
       userRepository.delete(user);
-    }
-
-    @Override
-    public List<String> getAllUserNames() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUserNames'");
-    }
-
-    @Override
-    public UserBasicResponseDTO getUserByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserByEmail'");
     }
 
     @Override

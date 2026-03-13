@@ -19,8 +19,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
-import com.swapp.swapp.dto.response.UserBasicResponseDTO;
-
 @Entity
 @Table(name = "articles")
 @Data
@@ -68,5 +66,4 @@ public class Article {
     @NotNull(message = "State cannot be null")
     @Enumerated(EnumType.STRING)
     private ArticleState state;
-
 }

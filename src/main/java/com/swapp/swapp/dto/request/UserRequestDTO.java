@@ -1,7 +1,5 @@
 package com.swapp.swapp.dto.request;
 
-
-
 public record UserRequestDTO(
     Integer id,
     String name,

@@ -7,5 +7,4 @@ public record UserBasicResponseDTO(
     String location,
     byte[] picture
 ) {
-
 }

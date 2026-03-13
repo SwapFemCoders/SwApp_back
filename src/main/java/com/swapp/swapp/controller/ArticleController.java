@@ -2,20 +2,15 @@ package com.swapp.swapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
-import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.exception.UnauthorizedException;
 import com.swapp.swapp.service.ArticleService;
 import com.swapp.swapp.service.UserService;
-
 import java.io.IOException;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -59,7 +53,6 @@ public class ArticleController {
         article.setPicture(file.getBytes());
         ArticleBasicResponseDTO newArticle = articleService.createArticle(article);
         return new ResponseEntity<>(newArticle, HttpStatus.CREATED);
-
     }
 
     @GetMapping
@@ -67,14 +60,6 @@ public class ArticleController {
         List<ArticleResponseDTO> articles = articleService.getAllAvailableArticles();
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
-
-    /*
-     * @GetMapping ("/{id}")
-     * public ResponseEntity<Article> getArticleById(@PathVariable int id) {
-     * Article article = articleService.getArticleById(id);
-     * return new ResponseEntity<>(article, HttpStatus.OK);
-     * }
-     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteArticle(@PathVariable int id) {
@@ -111,24 +96,6 @@ public class ArticleController {
         ArticleBasicResponseDTO updated = articleService.updateArticle(articleId, article, file);
         return ResponseEntity.ok(updated);
     }
-
-
-
-    // @PutMapping("/{articleId}/reserve")
-    // public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
-    // int userId = getAuthenticatedUserId();
-    // Article reserveArticle = articleService.reservedArticle(articleId, userId);
-    // return new ResponseEntity<>(reserveArticle, HttpStatus.OK);
-
-    // }
-
-    // private Integer getAuthenticatedUserId() {
-    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    // if (auth != null && auth.getDetails() != null) {
-    // return (Integer) auth.getDetails();
-    // }
-    // return null;
-    // }
 
     @PutMapping("/{articleId}/reserve")
     public ResponseEntity<Article> toggleReservation(@PathVariable int articleId) {

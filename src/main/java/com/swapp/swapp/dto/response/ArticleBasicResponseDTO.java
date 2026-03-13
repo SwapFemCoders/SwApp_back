@@ -1,7 +1,5 @@
 package com.swapp.swapp.dto.response;
 import java.time.LocalDate;
-
-
 import com.swapp.swapp.entity.ArticleState;
 import com.swapp.swapp.entity.ArticleStatus;
 
@@ -18,5 +16,4 @@ UserBasicResponseDTO creatorId,
     Integer reservedId
 
 ) {
-
 }
