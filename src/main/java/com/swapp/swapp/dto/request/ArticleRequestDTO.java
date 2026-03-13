@@ -4,7 +4,6 @@ public record ArticleRequestDTO(
     Integer id,
     String title,
     byte[] picture
-
 ){}
 
 

@@ -19,8 +19,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
-import com.swapp.swapp.dto.response.UserBasicResponseDTO;
-
 @Entity
 @Table(name = "articles")
 @Data
@@ -49,13 +47,12 @@ public class Article {
     @PastOrPresent(message = "Date cannot be in the future")
     private LocalDate date;
 
-    @NotBlank(message = "Category cannot be empty")
-    @Size(min = 2, max = 50, message = "Category must be between 2 and 50 characters")
+    @Enumerated
     private ArticleCategory category;
 
     @ManyToOne
     @JoinColumn(name = "creator_id", referencedColumnName = "id")
-    private UserBasicResponseDTO creatorId;
+    private User creatorId;
 
     @ManyToOne
     @JoinColumn(name = "reserved_id", nullable = true, referencedColumnName = "id")
@@ -69,5 +66,4 @@ public class Article {
     @NotNull(message = "State cannot be null")
     @Enumerated(EnumType.STRING)
     private ArticleState state;
-
 }

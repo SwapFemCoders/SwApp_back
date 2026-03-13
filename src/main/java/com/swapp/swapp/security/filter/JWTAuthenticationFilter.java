@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.security.CustomAuthenticationManager;
 import com.swapp.swapp.security.UserDetail;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +22,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private CustomAuthenticationManager customAuthenticationManager;
     private final String secret;
-
 
     public JWTAuthenticationFilter(CustomAuthenticationManager customAuthenticationManager, String secret) {
         this.customAuthenticationManager = customAuthenticationManager;
@@ -53,15 +50,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         UserDetail userDetail = (UserDetail) authResult.getPrincipal();
         User user = userDetail.getUser();
-        //Integer userId = userDetail.getUser().getId();
-        // List<String> roles = authResult.getAuthorities().stream()
-        //         .map(grantedAuthority -> grantedAuthority.getAuthority().replace("ROLE_", ""))
-        //         .collect(Collectors.toList());
 
         String token = JWT.create()
                 .withSubject(authResult.getName())
                 .withClaim("userId", user.getId())
-                // .withClaim("roles", roles)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (120 * 60000)))
                 .sign(Algorithm.HMAC512(this.secret));
 
@@ -78,6 +70,5 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         new ObjectMapper().writeValue(response.getWriter(), userDto);
     }
-
 }
 

@@ -5,5 +5,4 @@ public enum ArticleCategory {
     T_SHIRTS,
     JACKETS,
     PANTS,
-
 }

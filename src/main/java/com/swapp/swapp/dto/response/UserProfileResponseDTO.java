@@ -9,5 +9,4 @@ public record UserProfileResponseDTO(
     String location,
     byte[] picture
 ) {
-
 }

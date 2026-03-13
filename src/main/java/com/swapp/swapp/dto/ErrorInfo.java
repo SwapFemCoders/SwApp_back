@@ -1,7 +1,6 @@
 package com.swapp.swapp.dto;
 
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public record ErrorInfo(

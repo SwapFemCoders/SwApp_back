@@ -14,6 +14,6 @@ ArticleStatus status,
 ArticleState state,
 UserBasicResponseDTO creatorId, 
     Integer reservedId
-) {
 
+) {
 }
