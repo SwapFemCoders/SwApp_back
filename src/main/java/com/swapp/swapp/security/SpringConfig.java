@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -38,7 +37,6 @@ public class SpringConfig {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
             .csrf(csfr -> csfr.disable())
-            // .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/signup").permitAll()
@@ -60,7 +58,6 @@ public CorsConfigurationSource corsConfigurationSource() {
     configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); 
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-    // ESTA LÍNEA ES CLAVE:
     configuration.setExposedHeaders(Arrays.asList("Authorization")); 
     
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

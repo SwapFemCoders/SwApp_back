@@ -3,40 +3,30 @@ package com.swapp.swapp.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.swapp.swapp.dto.request.ArticleRequestDTO;
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 import com.swapp.swapp.dto.response.ArticleResponseDTO;
 import com.swapp.swapp.entity.Article;
-import com.swapp.swapp.entity.ArticleState;
 import com.swapp.swapp.entity.ArticleStatus;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.mapper.ArticleMapper;
 import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.ArticleRepository;
 import com.swapp.swapp.repository.UserRepository;
-
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleMapper articleMapper;
-
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, ArticleMapper articleMapper, UserRepository userRepository, UserMapper userMapper) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, ArticleMapper articleMapper, UserRepository userRepository) {
         this.articleRepository = articleRepository;
         this.articleMapper =articleMapper;
 
-        this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
 
@@ -80,7 +70,6 @@ public class ArticleServiceImpl implements ArticleService {
     return articleMapper.toBasicDTO(optionalArticle.get());
     }
 
-    //Articulos reservados por un ID X que se le pasa a la función
     @Override
     public List<ArticleResponseDTO> getAllReservedArticlesByReservedId(int reservedId) {
        User user = userRepository.findById(reservedId).orElseThrow();
@@ -89,7 +78,6 @@ public class ArticleServiceImpl implements ArticleService {
          
     }
 
-    //Articulos que yo cree y están disponibles
     @Override
     public List <ArticleResponseDTO> getAllAvailableArticlesByCreatorId(int creatorId){
         User user = userRepository.findById(creatorId).orElseThrow();
@@ -104,7 +92,6 @@ public Article toggleReservation(int articleId, int userId) {
     Article article = opt.get();
 
     if (article.getStatus().equals(ArticleStatus.AVAILABLE)) {
-        //reservarlo
         User authenticatedUser = userRepository.findById(userId)
        .orElseThrow(() -> new RuntimeException("The user does not exist"));
         article.setReservedId(authenticatedUser);
@@ -112,7 +99,6 @@ public Article toggleReservation(int articleId, int userId) {
     } else if (article.getStatus().equals(ArticleStatus.RESERVED)
             && article.getReservedId() != null
             && article.getReservedId().getId().equals(userId)) {
-        // liberar la propia reserva
         article.setReservedId(null);
         article.setStatus(ArticleStatus.AVAILABLE);
     } else {

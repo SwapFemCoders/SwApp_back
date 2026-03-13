@@ -4,5 +4,4 @@ public enum ArticleStatus {
     RESERVED,
     AVAILABLE, 
     RETIRED,
-
 }

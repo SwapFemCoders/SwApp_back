@@ -1,10 +1,7 @@
 package com.swapp.swapp.service;
 
-import java.util.List;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.swapp.swapp.dto.request.UserRequestDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;
@@ -20,13 +17,7 @@ public interface UserService {
 
     public UserBasicResponseDTO getBasicUserById (int id);
 
-    public List<String> getAllUserNames();
-
-    public UserBasicResponseDTO getUserByEmail(String email);
-
     public void updateUser (int id, UserRequestDTO user, MultipartFile file);
-
-    public void toFavorites (int articleId, int userId);
 
     public void deleteUser (int id);
 
