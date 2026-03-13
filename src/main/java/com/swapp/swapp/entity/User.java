@@ -51,7 +51,7 @@ public class User {
     private String userName;
 
     @NotBlank(message = "Password cannot be empty")
-    @Size(min = 6, max = 200, message = "Password must be between 6 and 50 characters")
+    @Size(min = 6, max = 200, message = "Password must be between 6 and 200 characters")
     @Column(nullable = false)
     private String password;
 
@@ -77,11 +77,6 @@ public class User {
     @JsonIgnore
     private List<Article> reservedArticles = new ArrayList<>();
 
-    // @ManyToMany(fetch = FetchType.LAZY)
-    // @JoinTable(
-    // name = "favorites_user", joinColumns = @JoinColumn(name = "user_id"),
-    // inverseJoinColumns = @JoinColumn(name = "article_id")
-    // )
-    // private Set<Article> favorites = new HashSet<>();
+
 
 }
