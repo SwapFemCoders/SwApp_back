@@ -28,17 +28,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Name cannot be empty")
+   // @NotBlank(message = "Name cannot be empty")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @NotBlank(message = "Last name cannot be empty")
+   // @NotBlank(message = "Last name cannot be empty")
     @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
 
     @NotBlank(message = "Username cannot be empty")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
-    @Column(unique = true, nullable = false, length = 50)
+    @Column(name="user_name", unique = true, nullable = false, length = 50)
     private String userName;
 
     @NotBlank(message = "Password cannot be empty")
@@ -46,8 +46,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @NotBlank(message = "Email cannot be empty")
-    @Column(unique = true, nullable = false)
+    //@NotBlank(message = "Email cannot be empty")
+    @Column(unique = true, nullable = true)
     private String email;
 
     @Size(max = 50, message = "Location must not exceed 50 characters")

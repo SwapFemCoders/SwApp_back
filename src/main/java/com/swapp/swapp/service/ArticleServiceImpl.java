@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
@@ -12,7 +15,6 @@ import com.swapp.swapp.entity.Article;
 import com.swapp.swapp.entity.ArticleStatus;
 import com.swapp.swapp.entity.User;
 import com.swapp.swapp.mapper.ArticleMapper;
-import com.swapp.swapp.mapper.UserMapper;
 import com.swapp.swapp.repository.ArticleRepository;
 import com.swapp.swapp.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -129,12 +131,15 @@ public Article toggleReservation(int articleId, int userId) {
         return articleMapper.toBasicDTO(saved); 
     }
 
-    @Override
+   @Override
     public Page<ArticleResponseDTO> getArticlesPaged(int page) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getArticlesPaged'");
+        Pageable pageable = PageRequest.of(page, 30, Sort.by("date").descending());
+        Page<Article> pageArticles = articleRepository.findByStatus(ArticleStatus.AVAILABLE, pageable);
+        return pageArticles.map(articleMapper::toResponseDTO);
     }
 
 }
+
+
 
 
