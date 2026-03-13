@@ -62,7 +62,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(authResult.getName())
                 .withClaim("userId", user.getId())
                 // .withClaim("roles", roles)
-                .withExpiresAt(new Date(System.currentTimeMillis() + (120 * 60000)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (220 * 60000)))
                 .sign(Algorithm.HMAC512(this.secret));
 
                 UserBasicResponseDTO userDto = new UserBasicResponseDTO(

@@ -77,11 +77,6 @@ public class User {
     @JsonIgnore
     private List<Article> reservedArticles = new ArrayList<>();
 
-    // @ManyToMany(fetch = FetchType.LAZY)
-    // @JoinTable(
-    // name = "favorites_user", joinColumns = @JoinColumn(name = "user_id"),
-    // inverseJoinColumns = @JoinColumn(name = "article_id")
-    // )
-    // private Set<Article> favorites = new HashSet<>();
+
 
 }
