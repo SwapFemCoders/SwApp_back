@@ -3,6 +3,7 @@ package com.swapp.swapp.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.swapp.swapp.dto.response.ArticleBasicResponseDTO;
 
@@ -29,6 +30,8 @@ public interface ArticleService {
     // public Article reservedArticle(int articleId);
 
     public Article toggleReservation(int articleId, int authenticatedUserId);
+
+    public ArticleBasicResponseDTO updateArticle(int id, Article article, MultipartFile file);
 
     public Page<ArticleResponseDTO> getArticlesPaged(int page);
 

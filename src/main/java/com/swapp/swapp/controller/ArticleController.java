@@ -88,17 +88,31 @@ public class ArticleController {
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
-    @GetMapping("/reserved/{reservedId}")
-    public ResponseEntity<List<ArticleResponseDTO>> getAllReservedArticles(@PathVariable int reservedId) {
-        List<ArticleResponseDTO> articles = articleService.getAllReservedArticlesByReservedId(reservedId);
+    @GetMapping("/reserved")
+    public ResponseEntity<List<ArticleResponseDTO>> getAllReservedArticles() {
+        int userId = getAuthenticatedUserId();
+        List<ArticleResponseDTO> articles = articleService.getAllReservedArticlesByReservedId(userId);
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    @GetMapping("/user/available/{creatorId}")
-    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticlesByCreatorId(@PathVariable int creatorId) {
-        List<ArticleResponseDTO> articles = articleService.getAllAvailableArticlesByCreatorId(creatorId);
+    @GetMapping("/user/available")
+    public ResponseEntity<List<ArticleResponseDTO>> getAllAvailableArticlesByCreatorId() {
+        int userId = getAuthenticatedUserId();
+        List<ArticleResponseDTO> articles = articleService.getAllAvailableArticlesByCreatorId(userId);
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
+
+    @PutMapping("/{articleId}")
+    public ResponseEntity<ArticleBasicResponseDTO> updateArticle(
+            @PathVariable int articleId,
+            @RequestPart("article") Article article,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+        
+        ArticleBasicResponseDTO updated = articleService.updateArticle(articleId, article, file);
+        return ResponseEntity.ok(updated);
+    }
+
+
 
     // @PutMapping("/{articleId}/reserve")
     // public ResponseEntity<Article> reserveArticle(@PathVariable int articleId) {
