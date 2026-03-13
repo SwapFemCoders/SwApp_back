@@ -31,8 +31,7 @@ You need to have the following installed:
 | Technology | Java 21, Sprint Boot 3, Visual Studio Code |
 | Database | PostgreSQL, Postman |
 | Build Tool | Apache Maven 3.9+ |
-| Libraries | Lombok, JDBC |
-| Test| JUnit, Vitest |
+| Libraries | Lombok, Mapstruct, JDBC |
 ---
 
 ### Frontend
@@ -153,19 +152,13 @@ Follow these steps to run the project locally:
 
 3. **🔐 Security:**
 
-The application uses token-based authentication (JWT) to protect user accounts.
+    The application uses token-based authentication (JWT) to protect user accounts.
 
-This allows you to:
+    This allows you to:
 
- * Log in securely.
- * Protect private paths.
- * Ensure that each user can only modify their own items.
-
-4. **Run the application:**
-```bash
- mvn exec:java -Dexec.mainClass="com.library.App"
- ```
-
+    * Log in securely.
+    * Protect private paths.
+    * Ensure that each user can only modify their own items.
 
 ## 📡 API REST
 
@@ -173,9 +166,11 @@ This allows you to:
 
 | Methods |	Endpoint |	Description |
 |--------|-----------|--------------|
-| GET | /api/articles | Obtener artículos |
-| GET | /api/articles/{id} | Obtener artículo |
-| POST | /api/articles | Crear artículo |
+| GET | /api/v1/articles | Get items |
+| GET | /api/v1/articles/{id} | Get item |
+| GET | /api/v1/articles/reserved | Reserve item |
+| GET | /api/v1/articles/user/available | Items by User |
+| POST | /api/v1/articles/paginated | Create items |
 
 ---
 
@@ -183,82 +178,12 @@ This allows you to:
 
 | Methods |	Endpoint |	Description |
 |--------|-----------|--------------|
-| POST | /api/auth/register | Registro |
-| POST | /api/auth/login | Login |
+| POST | /signup | Signup |
+| POST | /login | Login |
+| POST | /api/v1/users | Users |
 
-## 🗄 Database Schema
-The database is designed with a relational structure, ensuring data integrity through normalization and foreign key constraints.
-
-### 📊 Entity-Relationship Structure
-
-* **Article**
-* **ArticleCategoriy**
-* **ArticleState**
-* **ArticleStatus**
-* **User**
-
-
-<details>
-<summary><b>Click to view SQL Table Definitions</b></summary>
-
-```sql
--- TABLE 1: authors
-CREATE TABLE authors (
-    id SERIAL PRIMARY KEY,
-    full_name VARCHAR(300) NOT NULL
-);
-
--- TABLE 2: books
-CREATE TABLE books (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    isbn VARCHAR(17) UNIQUE,
-    description VARCHAR(200),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- TABLE 3: genres
-CREATE TABLE genres (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL
-);
-
--- TABLE 4: books_authors
-CREATE TABLE books_authors (
-    book_id INTEGER REFERENCES books(id) ON DELETE CASCADE,
-    author_id INTEGER REFERENCES authors(id) ON DELETE CASCADE,
-    PRIMARY KEY (book_id, author_id)
-);
-
--- TABLE 5: books_genres
-CREATE TABLE books_genres (
-    book_id INTEGER REFERENCES books(id) ON DELETE CASCADE,
-    genre_id INTEGER REFERENCES genres(id) ON DELETE CASCADE,
-    PRIMARY KEY (book_id, genre_id)
-);
-```
-</details>
 
 ---
-
-## 🧪 Testing
-To ensure the reliability and stability of the library system, we have implemented a comprehensive testing suite focused on unit testing and component isolation.
-
-### How to run the tests
-You can execute the entire test suite directly from your terminal using Maven:
-
-```bash
-mvn test
-```
-
-If `mvn test` is not working in your terminal, ensure your `pom.xml` includes the **Maven Surefire Plugin** and the following dependencies:
-
-1. **JUnit 5 (Jupiter)**: The core testing engine.
-2. **Mockito Inline**: Required for mocking final classes and methods.
-3. **Maven Surefire**: Necessary for the terminal to recognize tests during the build lifecycle.
-
-
 
 ## 👥 **Team**
 
