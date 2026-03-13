@@ -1,0 +1,210 @@
+<div align="center">
+  <img src="../SwApp_back/assets/Logo.png" width="200";">
+</div>
+
+
+A web platform for clothing exchange between users, allowing them to post items, browse available clothing, and easily manage exchanges.
+
+The project is built with a separate full-stack architecture:
+
+* Frontend: React + Vite
+* Backend: Spring Boot + PostgreSQL + Postman
+* Communication: REST API with JWT authentication
+
+## 💻 Requirements to run the application
+
+You need to have the following installed:
+
+| Tool | Use |
+|------|-----|
+|Node.js | Run the interface |
+| Java 21 |  Run the server |
+| Maven | Backend building |
+| PostgreSQL | Database |
+
+## 🛠️ Technologies used
+
+### Backend
+
+| Categories | Applications Used |
+|------------|---------------------|
+| Technology | Java 21, Sprint Boot 3, Visual Studio Code |
+| Database | PostgreSQL, Postman |
+| Build Tool | Apache Maven 3.9+ |
+| Libraries | Lombok, Mapstruct, JDBC |
+---
+
+### Frontend
+
+| Categories | Applications Used |
+|------------|---------------------|
+| Technology | React 19, Vite, Visual Studio Code |
+| Management Tools | Jira, with Scrum methodology and Confluence |
+| Design Tools | Figma and CSS Modules |
+| Version Control Tools | Git/GitHub - Gitflow - conventional commits |
+---
+
+## 🏛 Architecture
+
+```
+📦src
+ ┣ 📂main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂com
+ ┃ ┃ ┃ ┗ 📂swapp
+ ┃ ┃ ┃ ┃ ┗ 📂swapp
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CorsConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleRequestDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRequestDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleBasicResponseDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleResponseDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserBasicResponseDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserProfileResponseDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ErrorInfo.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Article.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleCategory.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleState.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleStatus.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadIdException.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FileException.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜GlobalExceptionHandler.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UnauthorizedException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂mapper
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleMapper.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserMapper.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂security
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂filter
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JWTAuthenticationFilter.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜JWTAuthorizationFilter.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomAuthenticationManager.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PasswordEncoderConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SpringConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserDetail.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ArticleServiceImpl.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserServiceImpl.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂utils
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FileUtil.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SwappApplication.java
+ ┃ ┗ 📂resources
+ ┃ ┃ ┗ 📜application.properties
+ ┗ 📂test
+ ┃ ┗ 📂java
+ ┃ ┃ ┗ 📂com
+ ┃ ┃ ┃ ┗ 📂swapp
+ ┃ ┃ ┃ ┃ ┗ 📂swapp
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SwappApplicationTests.java
+ ```
+The project follows a clean separation of concerns a 3-layer MVC architecture, client-server style, REST API type:
+
+* **Model:** POJO classes utilizing Lombok annotations.
+* **View:** A user-friendly Console/Terminal interface.
+* **Controller:** The "brain" that orchestrates data flow between the View and the Repository.
+* **Repository Pattern:** Used within the Model layer to abstract SQL queries and data persistence logic.
+
+---
+
+## ⚙️ Installation
+
+Follow these steps to run the project locally:
+
+1. **Clone the repository:**
+
+    ```bash
+    Clone the repository:
+    git clone https://github.com/SwapFemCoders/SwApp_back.git
+    
+    Access the project:
+    cd SwApp_back
+
+    Install dependencies:
+    npm install
+    
+    Run the project:
+    mvn spring-boot:run
+    
+    The application will open at:
+    http://localhost:8080
+
+
+
+2. **Database Setup:** 
+    Ensure you have a PostgreSQL instance running. Create your database and configure your credentials (URL, user, and password) inside the DBManager class to establish the connection.
+
+    ```
+    mvn clean install
+    ```
+
+3. **🔐 Security:**
+
+    The application uses token-based authentication (JWT) to protect user accounts.
+
+    This allows you to:
+
+    * Log in securely.
+    * Protect private paths.
+    * Ensure that each user can only modify their own items.
+
+## 📡 API REST
+
+**Articles**
+
+| Methods |	Endpoint |	Description |
+|--------|-----------|--------------|
+| GET | /api/v1/articles | Get items |
+| GET | /api/v1/articles/{id} | Get item |
+| GET | /api/v1/articles/reserved | Reserve item |
+| GET | /api/v1/articles/user/available | Items by User |
+| POST | /api/v1/articles/paginated | Create items |
+
+---
+
+**Users**
+
+| Methods |	Endpoint |	Description |
+|--------|-----------|--------------|
+| POST | /signup | Signup |
+| POST | /login | Login |
+| POST | /api/v1/users | Users |
+
+
+---
+
+## 👥 **Team**
+
+**Cristina Viejó**<br>
+GitHub: [https://github.com/krissvinti-ux](https://github.com/krissvinti-ux)<br>
+
+**Ingrid López**<br>
+GitHub: [https://github.com/Nuclea88](https://github.com/Nuclea88)<br>
+
+**Manon Godfroy**<br>
+GitHub: [https://github.com/ManonChab](https://github.com/ManonChab)<br>
+
+**Geraldine Saco**<br>
+GitHub: [https://github.com/GeraldineSaco](https://github.com/GeraldineSaco)<br>
+
+**Sukaina Hadani**<br>
+GitHub: [https://github.com/sukisu91-alt](hhttps://github.com/sukisu91-alt)<br>
+
+
+## 📄 License
+
+This FullStack project is developed for educational purposes.
+
+---
