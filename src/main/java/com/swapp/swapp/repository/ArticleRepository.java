@@ -17,5 +17,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer>{
     List<Article> findByCreatorIdAndStatus(User creatorId, ArticleStatus status);
 }
 
+//ESTO ES PARA BORRAR
 
 
