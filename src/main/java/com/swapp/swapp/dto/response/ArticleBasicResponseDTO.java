@@ -11,8 +11,9 @@ byte[] picture,
 String description,
 LocalDate date,
 ArticleStatus status,
-ArticleState state, 
+ArticleState state,
 UserBasicResponseDTO creatorId, 
     Integer reservedId
+
 ) {
 }

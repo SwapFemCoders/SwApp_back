@@ -20,7 +20,7 @@ public interface ArticleMapper {
     @Mapping(source = "creatorId", target = "creatorId")
     ArticleBasicResponseDTO toBasicDTO (Article entity);
 
-    ArticleResponseDTO toResponseDTO(Article article);
+    ArticleResponseDTO toResponseDTO (Article article);
 
     List<ArticleResponseDTO> toResponseAll (List<Article> listArticle);
 
