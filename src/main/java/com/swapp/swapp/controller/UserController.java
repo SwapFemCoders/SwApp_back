@@ -8,6 +8,8 @@ import com.swapp.swapp.dto.request.UserRequestDTO;
 import com.swapp.swapp.dto.response.UserBasicResponseDTO;
 import com.swapp.swapp.dto.response.UserProfileResponseDTO;
 import com.swapp.swapp.service.UserService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("api/v1/users")
+@Tag(name = "authentication users", 
+    description = "controller for authentication users"
+)
 public class UserController {
     private final UserService userService;
 
